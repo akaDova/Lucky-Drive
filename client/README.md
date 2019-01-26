@@ -1,7 +1,9 @@
 Простые формы для для передачи на сервер. Пока их две. 
 
 Передает `POST` запросы на [http://localhost:8080/](http://localhost:8080/) и сообщения по установленному 
-вебсокету [ws://localhost:8080](ws://localhost:8080)
+вебсокету [ws://localhost:8080](ws://localhost:8080).
+
+Собранное приложение в папке `dist`.
 
 ## Available Scripts
 
