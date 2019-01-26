@@ -1,6 +1,6 @@
 Test server, returns the client app handles clients `POST` requests & websocket messages at the same `8080` port.
 
-Client app is located in `dist` folder.
+Client app is located in `public` folder.
 
 ## Available Scripts
 
