@@ -6,11 +6,12 @@ const FORM_TYPES = ["time range", "target place"];
 
 class App extends Component {
   state = {
-    name: "kek"
+    name: "kek",
+    
   };
-  socket;
+  socket = this.socket = new WebSocket(`${wsHost}:${port}/websocket`)
   postUrl = `${httpHost}:${port}`;
-
+  
   postRequest = type => text => {
     console.log(type);
     console.log(text);
@@ -29,7 +30,8 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.socket = new WebSocket(`${wsHost}:${port}`);
+    
+    
     const { socket } = this;
     socket.addEventListener("open", function(event) {
       socket.send("Hello Server!");
