@@ -29,7 +29,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.socket = new WebSocket(`${wsHost}:${port}/websocket`);
+    this.socket = new WebSocket(`${wsHost}:${port}/ws/websocket`);
     const { socket } = this;
     socket.addEventListener("open", function(event) {
       socket.send("Hello Server!");
