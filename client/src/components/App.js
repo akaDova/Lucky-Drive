@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import Form from "./Form";
-import { wsHost, httpHost, port } from "../urls";
 
-const FORM_TYPES = ["time range", "target place"];
+import SockJS from "sockjs-client";
+
+import Form from "./Form";
+import { httpHost, port } from "../urls";
+
+const FORM_TYPES = ["time_range", "target_place"];
 
 class App extends Component {
   state = {
@@ -24,25 +27,24 @@ class App extends Component {
     }).then(response => console.log(response));
   };
   wsRequest = type => text => {
-    const { socket } = this;
-    socket.send(JSON.stringify({ [type]: text }));
+    this.socket.send(JSON.stringify({ [type]: text }));
   };
 
   componentDidMount() {
-    this.socket = new WebSocket(`${wsHost}:${port}`);
-    const { socket } = this;
-    socket.addEventListener("open", function(event) {
-      socket.send("Hello Server!");
-    });
+    this.socket = new SockJS(`${httpHost}:${port}/ws/app`);
+    
+    this.socket.onopen = function(event) {
+      this.socket.send("Hello Server!");
+    };
 
     // Listen for messages
-    socket.addEventListener("message", function(event) {
+    this.socket.onmessage = function(event) {
       console.log("Message from server ", event.data);
-    });
+    };
   }
 
   componentWillUnmount() {
-    WebSocket.close(1000);
+    this.socket.close(1000);
   }
 
   render() {
@@ -51,7 +53,7 @@ class App extends Component {
         {FORM_TYPES.map(type => (
           <Form
             key={type}
-            name={type}
+            name={type.split("_").join(" ")}
             postRequest={this.postRequest(type)}
             wsRequest={this.wsRequest(type)}
           />
